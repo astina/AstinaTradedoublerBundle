@@ -1,0 +1,23 @@
+parameters:
+    astina_tradedoubler.client.class: Astina\Bundle\TradedoublerBundle\Client\Client
+    astina_tradedoubler.http_client.class: Guzzle\Http\Client
+    astina_tradedoubler.api_url: "https://api.tradedoubler.com/{version}"
+    astina_tradedoubler.api_version: "1.0"
+
+services:
+    astina_tradedoubler.client:
+        class: %astina_tradedoubler.client.class%
+        arguments:
+            - @astina_tradedoubler.http_client
+            - %astina_tradedoubler.feed_id%
+            - @serializer
+            - @logger
+
+    astina_tradedoubler.http_client:
+        class: %astina_tradedoubler.http_client.class%
+        arguments:
+            - %astina_tradedoubler.api_url%
+            - version: %astina_tradedoubler.api_version%
+              request.options:
+                  query:
+                      token: %astina_tradedoubler.api_token%
