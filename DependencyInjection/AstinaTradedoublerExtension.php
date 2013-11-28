@@ -19,6 +19,10 @@ class AstinaTradedoublerExtension extends Extension
         $container->setParameter('astina_tradedoubler.api_token', $config['api_token']);
         $container->setParameter('astina_tradedoubler.feed_id', $config['feed_id']);
 
+        if (isset($config['product_source'])) {
+            $container->setAlias('astina_tradedoubler.product_source', $config['product_source']);
+        }
+
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
     }

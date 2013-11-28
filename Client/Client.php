@@ -35,7 +35,7 @@ class Client
     }
 
     /**
-     * @param ProductCollection|array $products
+     * @param ProductCollection|Product[]|array $products
      */
     public function createProducts($products)
     {

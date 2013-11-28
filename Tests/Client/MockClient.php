@@ -4,11 +4,16 @@ namespace Astina\Bundle\TradedoublerBundle\Tests\Client;
 
 use Astina\Bundle\TradedoublerBundle\Client\Client;
 use Astina\Bundle\TradedoublerBundle\Product\Product;
+use Astina\Bundle\TradedoublerBundle\Product\ProductCollection;
 
 class MockClient extends Client
 {
     public function createProducts($products)
     {
+        if (!($products instanceof ProductCollection)) {
+            $products = new ProductCollection($products);
+        }
+
         $this->logger->info('Creating/updating Tradedoubler products', array('ids' => $this->getSourceProductIds($products)));
 
         $json = $this->serializer->serialize($products, 'json');

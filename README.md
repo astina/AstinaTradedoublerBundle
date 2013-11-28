@@ -53,3 +53,16 @@ Use the `astina_tradedoubler.client` service to create/update/delete Tradedouble
 /** @var \Astina\Bundle\TradedoublerBundle\Client\Client $client **/
 $client->createProducts(new ProductCollection($tradedoublerProducts));
 ```
+
+*** Sending all product data to Tradedoubler
+
+You can use the `astina:tradedoubler:populate` commands to send your whole product catalogue to Tradedoubler. For this to work you have to:
+
+1. Create a service that implements `Astina\Bundle\TradedoublerBundle\Product\ProductSourceInterface`.
+
+2. Add the service id to the config:
+
+```yaml
+astina_tradedoubler:
+    product_source: my_product_source_service
+```

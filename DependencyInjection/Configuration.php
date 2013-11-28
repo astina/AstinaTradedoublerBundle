@@ -20,6 +20,9 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('feed_id')
                     ->isRequired()
                 ->end()
+                ->scalarNode('product_source')
+                    ->info('Service id of product source. Must implement "Astina\Bundle\TradedoublerBundle\Product\ProductSourceInterface"')
+                ->end()
             ->end()
         ;
 
