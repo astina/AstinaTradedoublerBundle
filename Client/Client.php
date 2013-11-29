@@ -36,13 +36,14 @@ class Client
 
     /**
      * @param ProductCollection|Product[]|array $products
+     * @throws TradedeoublerException
      */
     public function createProducts($products)
     {
         if (!($products instanceof ProductCollection)) {
             $products = new ProductCollection($products);
         }
-        
+
         $this->logger->info('Creating/updating Tradedoubler products', array('ids' => $this->getSourceProductIds($products)));
 
         $url = sprintf('products;fid=%s', $this->feedId);
@@ -56,7 +57,12 @@ class Client
             ),
             $json
         );
-        $request->send();
+
+        $response = $request->send()->json();
+
+        if (!$response || count($response['errors']) > 0) {
+            throw new TradedeoublerException($response ? $response['errors'] : 'Error while sending Tradedoubler request');
+        }
     }
 
     /**
@@ -74,6 +80,7 @@ class Client
      *
      * @param Product $product
      * @throws \InvalidArgumentException
+     * @throws TradedeoublerException
      */
     public function deleteProduct(Product $product)
     {
@@ -86,7 +93,12 @@ class Client
         $url = sprintf('products;fid=%s;spId=%s', $this->feedId, $product->getSourceProductId());
 
         $request = $this->guzzle->delete($url);
-        $request->send();
+
+        $response = $request->send()->json();
+
+        if (!$response || count($response['errors']) > 0) {
+            throw new TradedeoublerException($response ? $response['errors'] : 'Error while sending Tradedoubler request');
+        }
     }
 
     protected function getSourceProductIds(ProductCollection $products)

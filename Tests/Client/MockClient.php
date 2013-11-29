@@ -3,6 +3,7 @@
 namespace Astina\Bundle\TradedoublerBundle\Tests\Client;
 
 use Astina\Bundle\TradedoublerBundle\Client\Client;
+use Astina\Bundle\TradedoublerBundle\Client\TradedeoublerException;
 use Astina\Bundle\TradedoublerBundle\Product\Product;
 use Astina\Bundle\TradedoublerBundle\Product\ProductCollection;
 
