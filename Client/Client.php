@@ -39,11 +39,11 @@ class Client
      */
     public function createProducts($products)
     {
-        $this->logger->info('Creating/updating Tradedoubler products', array('ids' => $this->getSourceProductIds($products)));
-
         if (!($products instanceof ProductCollection)) {
             $products = new ProductCollection($products);
         }
+        
+        $this->logger->info('Creating/updating Tradedoubler products', array('ids' => $this->getSourceProductIds($products)));
 
         $url = sprintf('products;fid=%s', $this->feedId);
 
