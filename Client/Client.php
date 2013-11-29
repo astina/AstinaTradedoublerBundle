@@ -4,6 +4,8 @@ namespace Astina\Bundle\TradedoublerBundle\Client;
 
 use Astina\Bundle\TradedoublerBundle\Product\Product;
 use Astina\Bundle\TradedoublerBundle\Product\ProductCollection;
+use JMS\Serializer\Naming\IdenticalPropertyNamingStrategy;
+use JMS\Serializer\SerializerBuilder;
 use JMS\Serializer\SerializerInterface;
 use Psr\Log\LoggerInterface;
 
@@ -26,12 +28,15 @@ class Client
      */
     protected $logger;
 
-    function __construct(\Guzzle\Http\Client $guzzle, $feedId, SerializerInterface $serializer, LoggerInterface $logger)
+    function __construct(\Guzzle\Http\Client $guzzle, $feedId, LoggerInterface $logger)
     {
         $this->guzzle = $guzzle;
         $this->feedId = $feedId;
-        $this->serializer = $serializer;
         $this->logger = $logger;
+        $this->serializer = SerializerBuilder::create()
+            ->setPropertyNamingStrategy(new IdenticalPropertyNamingStrategy())
+            ->build()
+        ;
     }
 
     /**
