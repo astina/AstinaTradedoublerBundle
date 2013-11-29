@@ -10,7 +10,7 @@ services:
         arguments:
             - @astina_tradedoubler.http_client
             - %astina_tradedoubler.feed_id%
-            - @serializer
+            - @jms_serializer
             - @logger
 
     astina_tradedoubler.http_client:

@@ -16,7 +16,7 @@ Symfony 2 bundle for Tradedoubler integration.
 
 ### Step 2: Enable the bundle
 
-Enable the bundle in the kernel:
+Enable JMSSerializerBundle and AstinaTradedoublerBundle in the kernel:
 
 ``` php
 <?php
@@ -26,6 +26,7 @@ public function registerBundles()
 {
     $bundles = array(
         // ...
+        new JMS\SerializerBundle\JMSSerializerBundle(),
         new Astina\Bundle\TradedoublerBundle\AstinaTradedoublerBundle(),
     );
 }

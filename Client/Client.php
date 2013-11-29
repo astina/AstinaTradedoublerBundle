@@ -4,8 +4,8 @@ namespace Astina\Bundle\TradedoublerBundle\Client;
 
 use Astina\Bundle\TradedoublerBundle\Product\Product;
 use Astina\Bundle\TradedoublerBundle\Product\ProductCollection;
+use JMS\Serializer\SerializerInterface;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\Serializer\SerializerInterface;
 
 class Client
 {
