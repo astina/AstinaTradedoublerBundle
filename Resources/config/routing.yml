@@ -1,0 +1,3 @@
+astina_tradedoubler_redirect:
+    pattern: /td_redirect
+    defaults: { _controller: AstinaTradedoublerBundle:Redirect:redirect }
