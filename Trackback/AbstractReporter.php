@@ -89,7 +89,7 @@ abstract class AbstractReporter implements ReporterInterface
             return;
         }
 
-        if (null == $this->tdUid || count($this->getReportParams()) == 0) {
+        if (count($this->getReportParams()) == 0) {
             return;
         }
 
@@ -123,12 +123,17 @@ abstract class AbstractReporter implements ReporterInterface
 
     protected function getTrackingPixelUrl()
     {
-        $params = array_merge(array(
+        $defaults = array(
             'organization' => $this->organization,
             'event' => $this->eventId,
-            'tduid' => $this->tdUid,
 //            'reportInfo' => $this->getReportInfo(),
-        ), $this->getReportParams());
+        );
+
+        if ($this->tdUid) {
+            $defaults['tduid'] = $this->tdUid;
+        }
+
+        $params = array_merge($defaults, $this->getReportParams());
 
         return sprintf('%s?%s', $this->pixelBaseUrl, http_build_query($params, '', '&amp;'));
     }
