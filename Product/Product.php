@@ -204,6 +204,14 @@ class Product
     }
 
     /**
+     * @return Category
+     */
+    public function getFirstCategory()
+    {
+        return count($this->categories) > 0 ? current($this->categories) : null;
+    }
+
+    /**
      * @param string $productUrl
      */
     public function setProductUrl($productUrl)

@@ -1,0 +1,17 @@
+<script type="text/javascript">
+
+    var TDConf = TDConf || {};
+    TDConf.Config = {{ config.toJson() | raw }};
+
+    if(typeof (TDConf) != "undefined"){
+        TDConf.sudomain = ("https:" == document.location.protocol) ? "swrap" : "wrap";
+        TDConf.host = ".tradedoubler.com/wrap";
+        TDConf.containerTagURL = (("https:" == document.location.protocol) ? "https://" :
+                "http://") + TDConf.sudomain + TDConf.host;
+
+        if (typeof (TDConf.Config) != "undefined") {
+            document.write(unescape("%3Cscript src='" + TDConf.containerTagURL + "?id="+
+                    TDConf.Config.containerTagId +" ' type='text/javascript'%3E%3C/script%3E"));
+        }
+    }
+</script>

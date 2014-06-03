@@ -1,10 +1,17 @@
 parameters:
     astina_tradedoubler.client.class: Astina\Bundle\TradedoublerBundle\Client\Client
     astina_tradedoubler.http_client.class: Guzzle\Http\Client
+    astina_tradedoubler.twig.extension.class: Astina\Bundle\TradedoublerBundle\Twig\TradedoublerExtension
+    astina_tradedoubler.tracking.common.class: Astina\Bundle\TradedoublerBundle\Tracking\CommonConfig
+    astina_tradedoubler.tracking.product_listing.class: Astina\Bundle\TradedoublerBundle\Tracking\ProductListingConfig
+    astina_tradedoubler.tracking.product_page.class: Astina\Bundle\TradedoublerBundle\Tracking\ProductPageConfig
+    astina_tradedoubler.tracking.basket.class: Astina\Bundle\TradedoublerBundle\Tracking\BasketConfig
+    astina_tradedoubler.tracking.checkout.class: Astina\Bundle\TradedoublerBundle\Tracking\CheckoutConfig
     astina_tradedoubler.api_url: "https://api.tradedoubler.com/{version}"
     astina_tradedoubler.api_version: "1.0"
 
 services:
+
     astina_tradedoubler.client:
         class: %astina_tradedoubler.client.class%
         arguments:
@@ -20,3 +27,39 @@ services:
               request.options:
                   query:
                       token: %astina_tradedoubler.api_token%
+
+    astina_tradedoubler.tracking.common:
+        class: %astina_tradedoubler.tracking.common.class%
+        arguments:
+            - %astina_tradedoubler.tracking.container_tag_id%
+
+    astina_tradedoubler.tracking.product_listing:
+        class: %astina_tradedoubler.tracking.product_listing.class%
+        arguments:
+            - %astina_tradedoubler.tracking.container_tag_id%
+
+    astina_tradedoubler.tracking.product_page:
+        class: %astina_tradedoubler.tracking.product_page.class%
+        arguments:
+            - %astina_tradedoubler.tracking.container_tag_id%
+
+    astina_tradedoubler.tracking.basket:
+        class: %astina_tradedoubler.tracking.basket.class%
+        arguments:
+            - %astina_tradedoubler.tracking.container_tag_id%
+
+    astina_tradedoubler.tracking.checkout:
+        class: %astina_tradedoubler.tracking.checkout.class%
+        arguments:
+            - %astina_tradedoubler.tracking.container_tag_id%
+
+    astina_tradedoubler.twig.extension:
+        class: %astina_tradedoubler.twig.extension.class%
+        arguments:
+            - @astina_tradedoubler.tracking.common
+            - @astina_tradedoubler.tracking.product_listing
+            - @astina_tradedoubler.tracking.product_page
+            - @astina_tradedoubler.tracking.basket
+            - @astina_tradedoubler.tracking.checkout
+        tags:
+            - { name: twig.extension }
