@@ -14,12 +14,8 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->scalarNode('api_token')
-                    ->isRequired()
-                ->end()
-                ->scalarNode('feed_id')
-                    ->isRequired()
-                ->end()
+                ->scalarNode('api_token')->defaultNull()->end()
+                ->scalarNode('feed_id')->defaultNull()->end()
                 ->scalarNode('product_source')
                     ->info('Service id of product source. Must implement "Astina\Bundle\TradedoublerBundle\Product\ProductSourceInterface".')
                 ->end()

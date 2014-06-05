@@ -23,9 +23,7 @@ class AstinaTradedoublerExtension extends Extension
             $container->setAlias('astina_tradedoubler.product_source', $config['product_source']);
         }
 
-        if (isset($config['tracking'])) {
-            $container->setParameter('astina_tradedoubler.tracking.container_tag_id', $config['tracking']['container_tag_id']);
-        }
+        $container->setParameter('astina_tradedoubler.tracking.container_tag_id', isset($config['tracking']) ? $config['tracking']['container_tag_id'] : null);
 
         if (isset($config['trackback'])) {
             $container->setParameter('astina_tradedoubler.trackback.cookie_name', $config['trackback']['cookie_name']);

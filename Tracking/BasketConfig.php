@@ -28,4 +28,9 @@ class BasketConfig extends ContainerConfig
     {
         return count($this->products) > 0;
     }
+
+    public function getProducts()
+    {
+        return $this->products;
+    }
 }
