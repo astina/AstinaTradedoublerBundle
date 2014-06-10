@@ -49,7 +49,7 @@ astina_tradedoubler:
 
 ## Usage
 
-Use the classes in `Product/` to create instances of `Product`, `Category`, `ProductImage` and `ProductCollection`.
+Use the classes in `Model/` to create instances of `Product`, `Category`, `ProductImage` and `ProductCollection`.
 
 Use the `astina_tradedoubler.client` service to create/update/delete Tradedoubler records:
 
@@ -58,25 +58,11 @@ Use the `astina_tradedoubler.client` service to create/update/delete Tradedouble
 $client->createProducts(new ProductCollection($tradedoublerProducts));
 ```
 
-Configure and implement a trackback report service to report sales. Extend `Astina\Bundle\TradedoublerBundle\Trackback\AbstractReporter` and implement the remaining methods.
-
-```xml
-<service id="my_shop.tradedoubler.reporter" class="Acme\ShopBundle\Tradedoubler\Reporter">
-    <argument>%astina_tradedoubler.trackback.organization%</argument>
-    <argument>%astina_tradedoubler.trackback.event_id%</argument>
-    <argument>%astina_tradedoubler.trackback.cookie_name%</argument>
-    <argument>%astina_tradedoubler.trackback.pixel_base_url%</argument>
-    <argument type="service" id="templating" />
-    <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" />
-    <tag name="kernel.event_listener" event="kernel.response" method="onKernelResponse" />
-</service>
-```
-
 ### Sending all product data to Tradedoubler
 
 You can use the `astina:tradedoubler:populate` commands to send your whole product catalogue to Tradedoubler. For this to work you have to:
 
-1. Create a service that implements `Astina\Bundle\TradedoublerBundle\Product\ProductSourceInterface`.
+1. Create a service that implements `Astina\Bundle\TradedoublerBundle\Client\ProductSourceInterface`.
 
 2. Add the service id to the config:
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Astina\Bundle\TradedoublerBundle\Product;
+namespace Astina\Bundle\TradedoublerBundle\Model;
 
 class Product
 {
@@ -172,7 +172,7 @@ class Product
     }
 
     /**
-     * @param \Astina\Bundle\TradedoublerBundle\Product\ProductImage $productImage
+     * @param ProductImage $productImage
      */
     public function setProductImage($productImage)
     {
@@ -180,7 +180,7 @@ class Product
     }
 
     /**
-     * @return \Astina\Bundle\TradedoublerBundle\Product\ProductImage
+     * @return ProductImage
      */
     public function getProductImage()
     {
