@@ -2,6 +2,9 @@ parameters:
     astina_tradedoubler.client.class: Astina\Bundle\TradedoublerBundle\Client\Client
     astina_tradedoubler.http_client.class: Guzzle\Http\Client
     astina_tradedoubler.twig.extension.class: Astina\Bundle\TradedoublerBundle\Twig\TradedoublerExtension
+    astina_tradedoubler.trackback.pixel_reporter.class: Astina\Bundle\TradedoublerBundle\Trackback\PixelReporter
+    astina_tradedoubler.trackback.mail_reporter.class: Astina\Bundle\TradedoublerBundle\Trackback\MailReporter
+    astina_tradedoubler.tracking.uid_tracker.class: Astina\Bundle\TradedoublerBundle\Tracking\UidTracker
     astina_tradedoubler.tracking.common.class: Astina\Bundle\TradedoublerBundle\Tracking\CommonConfig
     astina_tradedoubler.tracking.product_listing.class: Astina\Bundle\TradedoublerBundle\Tracking\ProductListingConfig
     astina_tradedoubler.tracking.product_page.class: Astina\Bundle\TradedoublerBundle\Tracking\ProductPageConfig
@@ -27,6 +30,28 @@ services:
               request.options:
                   query:
                       token: %astina_tradedoubler.api_token%
+
+    astina_tradedoubler.trackback.pixel_reporter:
+        class: %astina_tradedoubler.trackback.pixel_reporter.class%
+        arguments:
+            - @astina_tradedoubler.tracking.uid_tracker
+            - @templating
+            - %astina_tradedoubler.trackback.organization%
+            - %astina_tradedoubler.trackback.pixel_base_url%
+
+    astina_tradedoubler.trackback.mail_reporter:
+        class: %astina_tradedoubler.trackback.mail_reporter.class%
+        arguments:
+            - @mailer
+            - %astina_tradedoubler.trackback.organization%
+            - %astina_tradedoubler.trackback.mail_sender%
+            - %astina_tradedoubler.trackback.mail_recipients%
+            - %astina_tradedoubler.trackback.mail_data_folder%
+
+    astina_tradedoubler.tracking.uid_tracker:
+        class: %astina_tradedoubler.tracking.uid_tracker.class%
+        arguments:
+            - %astina_tradedoubler.trackback.cookie_name%
 
     astina_tradedoubler.tracking.common:
         class: %astina_tradedoubler.tracking.common.class%

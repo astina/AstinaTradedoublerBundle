@@ -2,6 +2,7 @@
 
 namespace Astina\Bundle\TradedoublerBundle\Trackback;
 
+use Astina\Bundle\TradedoublerBundle\Tracking\UidTracker;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
@@ -9,34 +10,35 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernel;
 use Symfony\Component\Templating\EngineInterface;
 
-abstract class PixelReporter implements ReporterInterface
+class PixelReporter implements ReporterInterface
 {
-    private $organization;
+    protected $organization;
 
-    private $cookieName;
-
-    private $pixelBaseUrl;
+    protected $pixelBaseUrl;
 
     /**
      * @var \Symfony\Component\Templating\EngineInterface
      */
-    private $templating;
-
-    private $tdUid = null;
+    protected $templating;
 
     /**
      * @var SessionInterface
      */
-    private $session;
+    protected $session;
+
+    /**
+     * @var UidTracker
+     */
+    protected $uidTracker;
 
     const SESSION_VAR = 'astina_tradedoubler_report_params';
 
-    public function __construct($organization, $cookieName, $pixelBaseUrl, EngineInterface $templating)
+    public function __construct(UidTracker $uidTracker, EngineInterface $templating, $organization, $pixelBaseUrl)
     {
-        $this->organization = $organization;
-        $this->cookieName = $cookieName;
-        $this->pixelBaseUrl = $pixelBaseUrl;
+        $this->uidTracker = $uidTracker;
         $this->templating = $templating;
+        $this->organization = $organization;
+        $this->pixelBaseUrl = $pixelBaseUrl;
     }
 
     public function setReportParams(array $params)
@@ -64,20 +66,7 @@ abstract class PixelReporter implements ReporterInterface
 
     public function onKernelRequest(GetResponseEvent $event)
     {
-        if (HttpKernel::MASTER_REQUEST != $event->getRequestType()) {
-            return;
-        }
-
-        $request = $event->getRequest();
-        $this->session = $request->getSession();
-
-        $tdUid = $this->session->get($this->cookieName);
-
-        if (null == $tdUid) {
-            $tdUid = $request->cookies->get($this->cookieName);
-        }
-
-        $this->tdUid = $tdUid;
+        $this->session = $event->getRequest()->getSession();
     }
 
     public function onKernelResponse(FilterResponseEvent $event)
@@ -125,8 +114,8 @@ abstract class PixelReporter implements ReporterInterface
 //            'reportInfo' => $this->getReportInfo(),
         );
 
-        if ($this->tdUid) {
-            $defaults['tduid'] = $this->tdUid;
+        if ($tdUid = $this->uidTracker->getUid()) {
+            $defaults['tduid'] = $tdUid;
         }
 
         $params = array_merge($defaults, $this->getReportParams());
