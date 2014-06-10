@@ -19,4 +19,4 @@ interface ReporterInterface
     function getReportParams();
 
     function clearReportParams();
-} 
+}

@@ -2,8 +2,8 @@
 
 namespace Astina\Bundle\TradedoublerBundle\Client;
 
-use Astina\Bundle\TradedoublerBundle\Product\Product;
-use Astina\Bundle\TradedoublerBundle\Product\ProductCollection;
+use Astina\Bundle\TradedoublerBundle\Model\Product;
+use Astina\Bundle\TradedoublerBundle\Model\ProductCollection;
 use JMS\Serializer\Naming\IdenticalPropertyNamingStrategy;
 use JMS\Serializer\SerializerBuilder;
 use JMS\Serializer\SerializerInterface;

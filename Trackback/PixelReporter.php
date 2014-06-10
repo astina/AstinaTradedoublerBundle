@@ -9,11 +9,9 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernel;
 use Symfony\Component\Templating\EngineInterface;
 
-abstract class AbstractReporter implements ReporterInterface
+abstract class PixelReporter implements ReporterInterface
 {
     private $organization;
-
-    private $eventId;
 
     private $cookieName;
 
@@ -33,10 +31,9 @@ abstract class AbstractReporter implements ReporterInterface
 
     const SESSION_VAR = 'astina_tradedoubler_report_params';
 
-    public function __construct($organization, $eventId, $cookieName, $pixelBaseUrl, EngineInterface $templating)
+    public function __construct($organization, $cookieName, $pixelBaseUrl, EngineInterface $templating)
     {
         $this->organization = $organization;
-        $this->eventId = $eventId;
         $this->cookieName = $cookieName;
         $this->pixelBaseUrl = $pixelBaseUrl;
         $this->templating = $templating;
@@ -125,7 +122,6 @@ abstract class AbstractReporter implements ReporterInterface
     {
         $defaults = array(
             'organization' => $this->organization,
-            'event' => $this->eventId,
 //            'reportInfo' => $this->getReportInfo(),
         );
 

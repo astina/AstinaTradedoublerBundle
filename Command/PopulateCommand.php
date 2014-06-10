@@ -3,7 +3,7 @@
 namespace Astina\Bundle\TradedoublerBundle\Command;
 
 use Astina\Bundle\TradedoublerBundle\Client\Client;
-use Astina\Bundle\TradedoublerBundle\Product\ProductSourceInterface;
+use Astina\Bundle\TradedoublerBundle\Client\ProductSourceInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Helper\ProgressHelper;
 use Symfony\Component\Console\Input\InputArgument;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Astina\Bundle\TradedoublerBundle\Product;
+namespace Astina\Bundle\TradedoublerBundle\Model;
 
 class ProductCollection
 {
