@@ -2,7 +2,6 @@
 
 namespace Astina\Bundle\TradedoublerBundle\Trackback;
 
-use Astina\Bundle\TradedoublerBundle\Tracking\UidTracker;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;

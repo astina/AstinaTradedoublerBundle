@@ -1,6 +1,6 @@
 <?php
 
-namespace Astina\Bundle\TradedoublerBundle\Tracking;
+namespace Astina\Bundle\TradedoublerBundle\Trackback;
 
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernel;

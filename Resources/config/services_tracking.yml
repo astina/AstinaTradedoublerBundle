@@ -1,0 +1,44 @@
+parameters:
+    astina_tradedoubler.tracking.common.class: Astina\Bundle\TradedoublerBundle\Tracking\CommonConfig
+    astina_tradedoubler.tracking.product_listing.class: Astina\Bundle\TradedoublerBundle\Tracking\ProductListingConfig
+    astina_tradedoubler.tracking.product_page.class: Astina\Bundle\TradedoublerBundle\Tracking\ProductPageConfig
+    astina_tradedoubler.tracking.basket.class: Astina\Bundle\TradedoublerBundle\Tracking\BasketConfig
+    astina_tradedoubler.tracking.checkout.class: Astina\Bundle\TradedoublerBundle\Tracking\CheckoutConfig
+
+services:
+
+    astina_tradedoubler.tracking.common:
+        class: %astina_tradedoubler.tracking.common.class%
+        arguments:
+            - %astina_tradedoubler.tracking.common.container_tag_id%
+
+    astina_tradedoubler.tracking.product_listing:
+        class: %astina_tradedoubler.tracking.product_listing.class%
+        arguments:
+            - %astina_tradedoubler.tracking.product_listing.container_tag_id%
+
+    astina_tradedoubler.tracking.product_page:
+        class: %astina_tradedoubler.tracking.product_page.class%
+        arguments:
+            - %astina_tradedoubler.tracking.product_page.container_tag_id%
+
+    astina_tradedoubler.tracking.basket:
+        class: %astina_tradedoubler.tracking.basket.class%
+        arguments:
+            - %astina_tradedoubler.tracking.basket.container_tag_id%
+
+    astina_tradedoubler.tracking.checkout:
+        class: %astina_tradedoubler.tracking.checkout.class%
+        arguments:
+            - %astina_tradedoubler.tracking.checkout.container_tag_id%
+
+    astina_tradedoubler.twig.extension:
+        class: %astina_tradedoubler.twig.extension.class%
+        arguments:
+            - @astina_tradedoubler.tracking.common
+            - @astina_tradedoubler.tracking.product_listing
+            - @astina_tradedoubler.tracking.product_page
+            - @astina_tradedoubler.tracking.basket
+            - @astina_tradedoubler.tracking.checkout
+        tags:
+            - { name: twig.extension }

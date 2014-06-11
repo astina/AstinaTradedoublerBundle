@@ -23,8 +23,6 @@ class AstinaTradedoublerExtension extends Extension
             $container->setAlias('astina_tradedoubler.product_source', $config['product_source']);
         }
 
-        $container->setParameter('astina_tradedoubler.tracking.container_tag_id', isset($config['tracking']) ? $config['tracking']['container_tag_id'] : null);
-
         if (isset($config['trackback'])) {
             $container->setParameter('astina_tradedoubler.trackback.cookie_name', $config['trackback']['cookie_name']);
             $container->setParameter('astina_tradedoubler.trackback.organization', $config['trackback']['organization']);
@@ -37,5 +35,15 @@ class AstinaTradedoublerExtension extends Extension
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
+
+        if (isset($config['tracking'])) {
+
+            $loader->load('services_tracking.yml');
+
+            foreach ($config['tracking']['container_tag_ids'] as $name => $tagId) {
+                $param = sprintf('astina_tradedoubler.tracking.%s.container_tag_id', $name);
+                $container->setParameter($param, $tagId);
+            }
+        }
     }
 }

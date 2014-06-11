@@ -4,12 +4,7 @@ parameters:
     astina_tradedoubler.twig.extension.class: Astina\Bundle\TradedoublerBundle\Twig\TradedoublerExtension
     astina_tradedoubler.trackback.pixel_reporter.class: Astina\Bundle\TradedoublerBundle\Trackback\PixelReporter
     astina_tradedoubler.trackback.mail_reporter.class: Astina\Bundle\TradedoublerBundle\Trackback\MailReporter
-    astina_tradedoubler.tracking.uid_tracker.class: Astina\Bundle\TradedoublerBundle\Tracking\UidTracker
-    astina_tradedoubler.tracking.common.class: Astina\Bundle\TradedoublerBundle\Tracking\CommonConfig
-    astina_tradedoubler.tracking.product_listing.class: Astina\Bundle\TradedoublerBundle\Tracking\ProductListingConfig
-    astina_tradedoubler.tracking.product_page.class: Astina\Bundle\TradedoublerBundle\Tracking\ProductPageConfig
-    astina_tradedoubler.tracking.basket.class: Astina\Bundle\TradedoublerBundle\Tracking\BasketConfig
-    astina_tradedoubler.tracking.checkout.class: Astina\Bundle\TradedoublerBundle\Tracking\CheckoutConfig
+    astina_tradedoubler.trackback.uid_tracker.class: Astina\Bundle\TradedoublerBundle\Trackback\UidTracker
     astina_tradedoubler.api_url: "https://api.tradedoubler.com/{version}"
     astina_tradedoubler.api_version: "1.0"
 
@@ -34,7 +29,7 @@ services:
     astina_tradedoubler.trackback.pixel_reporter:
         class: %astina_tradedoubler.trackback.pixel_reporter.class%
         arguments:
-            - @astina_tradedoubler.tracking.uid_tracker
+            - @astina_tradedoubler.trackback.uid_tracker
             - @templating
             - %astina_tradedoubler.trackback.organization%
             - %astina_tradedoubler.trackback.pixel_base_url%
@@ -48,43 +43,7 @@ services:
             - %astina_tradedoubler.trackback.mail_recipients%
             - %astina_tradedoubler.trackback.mail_data_folder%
 
-    astina_tradedoubler.tracking.uid_tracker:
-        class: %astina_tradedoubler.tracking.uid_tracker.class%
+    astina_tradedoubler.trackback.uid_tracker:
+        class: %astina_tradedoubler.trackback.uid_tracker.class%
         arguments:
             - %astina_tradedoubler.trackback.cookie_name%
-
-    astina_tradedoubler.tracking.common:
-        class: %astina_tradedoubler.tracking.common.class%
-        arguments:
-            - %astina_tradedoubler.tracking.container_tag_id%
-
-    astina_tradedoubler.tracking.product_listing:
-        class: %astina_tradedoubler.tracking.product_listing.class%
-        arguments:
-            - %astina_tradedoubler.tracking.container_tag_id%
-
-    astina_tradedoubler.tracking.product_page:
-        class: %astina_tradedoubler.tracking.product_page.class%
-        arguments:
-            - %astina_tradedoubler.tracking.container_tag_id%
-
-    astina_tradedoubler.tracking.basket:
-        class: %astina_tradedoubler.tracking.basket.class%
-        arguments:
-            - %astina_tradedoubler.tracking.container_tag_id%
-
-    astina_tradedoubler.tracking.checkout:
-        class: %astina_tradedoubler.tracking.checkout.class%
-        arguments:
-            - %astina_tradedoubler.tracking.container_tag_id%
-
-    astina_tradedoubler.twig.extension:
-        class: %astina_tradedoubler.twig.extension.class%
-        arguments:
-            - @astina_tradedoubler.tracking.common
-            - @astina_tradedoubler.tracking.product_listing
-            - @astina_tradedoubler.tracking.product_page
-            - @astina_tradedoubler.tracking.basket
-            - @astina_tradedoubler.tracking.checkout
-        tags:
-            - { name: twig.extension }
