@@ -23,7 +23,13 @@ class AstinaTradedoublerExtension extends Extension
             $container->setAlias('astina_tradedoubler.product_source', $config['product_source']);
         }
 
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader->load('services.yml');
+
         if (isset($config['trackback'])) {
+
+            $loader->load('services_trackback.yml');
+
             $container->setParameter('astina_tradedoubler.trackback.cookie_name', $config['trackback']['cookie_name']);
             $container->setParameter('astina_tradedoubler.trackback.organization', $config['trackback']['organization']);
             $container->setParameter('astina_tradedoubler.trackback.pixel_base_url', $config['trackback']['pixel_base_url']);
@@ -32,9 +38,6 @@ class AstinaTradedoublerExtension extends Extension
             $container->setParameter('astina_tradedoubler.trackback.mail_recipients', $config['trackback']['mail_recipients']);
             $container->setParameter('astina_tradedoubler.trackback.mail_data_folder', $config['trackback']['mail_data_folder']);
         }
-
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('services.yml');
 
         if (isset($config['tracking'])) {
 

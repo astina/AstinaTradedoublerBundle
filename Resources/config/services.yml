@@ -2,9 +2,6 @@ parameters:
     astina_tradedoubler.client.class: Astina\Bundle\TradedoublerBundle\Client\Client
     astina_tradedoubler.http_client.class: Guzzle\Http\Client
     astina_tradedoubler.twig.extension.class: Astina\Bundle\TradedoublerBundle\Twig\TradedoublerExtension
-    astina_tradedoubler.trackback.pixel_reporter.class: Astina\Bundle\TradedoublerBundle\Trackback\PixelReporter
-    astina_tradedoubler.trackback.mail_reporter.class: Astina\Bundle\TradedoublerBundle\Trackback\MailReporter
-    astina_tradedoubler.trackback.uid_tracker.class: Astina\Bundle\TradedoublerBundle\Trackback\UidTracker
     astina_tradedoubler.api_url: "https://api.tradedoubler.com/{version}"
     astina_tradedoubler.api_version: "1.0"
 
@@ -25,28 +22,3 @@ services:
               request.options:
                   query:
                       token: %astina_tradedoubler.api_token%
-
-    astina_tradedoubler.trackback.pixel_reporter:
-        class: %astina_tradedoubler.trackback.pixel_reporter.class%
-        arguments:
-            - @astina_tradedoubler.trackback.uid_tracker
-            - @templating
-            - %astina_tradedoubler.trackback.organization%
-            - %astina_tradedoubler.trackback.pixel_base_url%
-        tags:
-            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
-            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
-
-    astina_tradedoubler.trackback.mail_reporter:
-        class: %astina_tradedoubler.trackback.mail_reporter.class%
-        arguments:
-            - @mailer
-            - %astina_tradedoubler.trackback.organization%
-            - %astina_tradedoubler.trackback.mail_sender%
-            - %astina_tradedoubler.trackback.mail_recipients%
-            - %astina_tradedoubler.trackback.mail_data_folder%
-
-    astina_tradedoubler.trackback.uid_tracker:
-        class: %astina_tradedoubler.trackback.uid_tracker.class%
-        arguments:
-            - %astina_tradedoubler.trackback.cookie_name%
