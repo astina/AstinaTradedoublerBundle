@@ -28,6 +28,8 @@ class Client
      */
     protected $logger;
 
+    const REQUEST_TIMEOUT = 10; // seconds
+
     function __construct(\Guzzle\Http\Client $guzzle, $feedId, LoggerInterface $logger)
     {
         $this->guzzle = $guzzle;
@@ -41,7 +43,7 @@ class Client
 
     /**
      * @param ProductCollection|Product[]|array $products
-     * @throws TradedeoublerException
+     * @throws TradedoublerException
      */
     public function createProducts($products)
     {
@@ -60,13 +62,20 @@ class Client
             array(
                 'content-type' => 'application/json; charset=utf-8',
             ),
-            $json
+            $json,
+            array(
+                'timeout' => self::REQUEST_TIMEOUT
+            )
         );
 
-        $response = $request->send()->json();
+        try {
+            $response = $request->send()->json();
+        } catch (\Exception $e) {
+            throw new TradedoublerException('Error while sending Tradedoubler request', $e->getCode(), $e);
+        }
 
         if (!$response || count($response['errors']) > 0) {
-            throw new TradedeoublerException($response ? $response['errors'] : 'Error while sending Tradedoubler request');
+            throw new TradedoublerException($response ? $response['errors'] : 'Error while sending Tradedoubler request');
         }
     }
 
@@ -85,7 +94,7 @@ class Client
      *
      * @param Product $product
      * @throws \InvalidArgumentException
-     * @throws TradedeoublerException
+     * @throws TradedoublerException
      */
     public function deleteProduct(Product $product)
     {
@@ -99,10 +108,15 @@ class Client
 
         $request = $this->guzzle->delete($url);
 
-        $response = $request->send()->json();
+
+        try {
+            $response = $request->send()->json();
+        } catch (\Exception $e) {
+            throw new TradedoublerException('Error while sending Tradedoubler request', $e->getCode(), $e);
+        }
 
         if (!$response || count($response['errors']) > 0) {
-            throw new TradedeoublerException($response ? $response['errors'] : 'Error while sending Tradedoubler request');
+            throw new TradedoublerException($response ? $response['errors'] : 'Error while sending Tradedoubler request');
         }
     }
 

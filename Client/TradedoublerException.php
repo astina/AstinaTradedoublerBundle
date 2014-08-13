@@ -2,7 +2,7 @@
 
 namespace Astina\Bundle\TradedoublerBundle\Client;
 
-class TradedeoublerException extends \Exception
+class TradedoublerException extends \Exception
 {
     public function __construct($message = "", $code = 0, \Exception $previous = null)
     {
