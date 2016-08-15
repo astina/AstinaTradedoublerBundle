@@ -71,6 +71,7 @@ class Client
         try {
             $response = $request->send()->json();
         } catch (\Exception $e) {
+            $this->logger->critical('Error while sending Tradedoubler request: ' . $e->getCode() . $e);
             throw new TradedoublerException('Error while sending Tradedoubler request', $e->getCode(), $e);
         }
 
