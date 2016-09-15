@@ -28,7 +28,7 @@ class Client
      */
     protected $logger;
 
-    const REQUEST_TIMEOUT = 10; // seconds
+    const REQUEST_TIMEOUT = 30; // seconds
 
     function __construct(\Guzzle\Http\Client $guzzle, $feedId, LoggerInterface $logger)
     {
